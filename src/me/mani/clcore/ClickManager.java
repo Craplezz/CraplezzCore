@@ -78,7 +78,7 @@ public class ClickManager {
 		if (event.getSlot() < 0 || event.getSlot() >= 256)
 			return false;
 		ClickManager clickManager;
-		if (clickManagers.containsKey(player) && (clickManager = clickManagers.get(player)).inventory != null && clickManager.getInventory().equals(event.getClickedInventory())) {
+		if (clickManagers.containsKey(player) && (clickManager = clickManagers.get(player)).inventory != null && clickManager.getInventory().equals(event.getInventory())) {
 			if (clickManager.clickListeners != null && clickManager.clickListeners[event.getSlot()] != null)
 				clickManager.clickListeners[event.getSlot()].accept(event);
 			return true;

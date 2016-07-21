@@ -1,4 +1,4 @@
 name: CraplezzCore
 version: 1.0
 main: me.mani.clcore.Core
-depends: [CraplezzDepends]
+depends: [CraplezzDepends, MongoPerms]

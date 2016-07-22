@@ -39,6 +39,7 @@ public class ServerManager {
 
             @Override
             public void onSuccess(@Nullable ServerConnection serverConnection) {
+                System.out.println("[SINFO] Sending packet!");
                 if (serverConnection != null) {
                     serverConnection.sendPacket(new ServerInfoUpdatePacket());
                 }

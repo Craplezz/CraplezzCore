@@ -30,6 +30,7 @@ public class ServerInfoBroadcastClient extends Client {
 
     @Override
     public void onConnect(ServerConnection serverConnection) {
+        System.out.println("[SINFO] Connected!");
         serverConnectionFuture.complete(serverConnection);
     }
 
@@ -40,6 +41,7 @@ public class ServerInfoBroadcastClient extends Client {
 
     @Override
     public void onPacketRecieve(ServerConnection serverConnection, Packet packet) {
+        System.out.println("[SINFO] Packet recieved!");
         if (packet instanceof ServerInfoDataPacket) {
             serverManager.updateServerInfo(((ServerInfoDataPacket) packet).getServerInfo());
         }

@@ -22,6 +22,8 @@ public class PlayerJoinListener implements Listener {
         if (Core.getLocaleManager().getLocale(localeString) != null)
             event.getPlayer().setPlayerListName(Core.getLocaleManager().translate(localeString) + event.getPlayer().getName());
 
+        Core.getServerManager().broadcastServerInfoUpdate();
+
     }
 
 }

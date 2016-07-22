@@ -9,7 +9,7 @@ import me.mani.clcore.locale.LocaleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Schuckmann on 06.05.2016.
@@ -32,11 +32,14 @@ public class Core extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InventoryCloseListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
-        mongoClient = new MongoClient(new ServerAddress("craplezz.de", 27017), Arrays.asList(MongoCredential.createCredential("Overload", "admin", "1999mani123".toCharArray())));
+        mongoClient = new MongoClient(new ServerAddress("craplezz.de", 27017), Collections.singletonList(MongoCredential.createCredential("Overload", "admin", "1999mani123".toCharArray())));
         localeManager = new LocaleManager(mongoClient, "todo", "general");
-        serverManager = new ServerManager(mongoClient, "todo", "general");
+        serverManager = new ServerManager();
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
+        // Let everybody know that we started
+        serverManager.broadcastServerInfoUpdate();
     }
 
     public static Core getInstance() {

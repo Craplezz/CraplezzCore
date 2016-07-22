@@ -1,6 +1,7 @@
 package me.mani.clcore.listener;
 
 import me.mani.clcore.ClickManager;
+import me.mani.clcore.Core;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,8 @@ public class PlayerQuitListener implements Listener {
 
     private void handleQuit(Player player) {
         ClickManager.unregister(player);
+
+        Core.getServerManager().broadcastServerInfoUpdate();
     }
 
 }

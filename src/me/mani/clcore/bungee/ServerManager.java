@@ -2,16 +2,12 @@ package me.mani.clcore.bungee;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import me.mani.clapi.connection.client.ServerConnection;
 import me.mani.clcore.Core;
 import me.mani.clcore.server.ServerInfoBroadcastClient;
 import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
 import me.mani.clcore.util.CachedServerInfo;
 import org.bukkit.entity.Player;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,23 +31,12 @@ public class ServerManager {
      * Should be called on start, stop, motd change and online player change.
      */
     public void broadcastServerInfoUpdate() {
-        Futures.addCallback(broadcastClient.getServerConnectionFuture(), new FutureCallback<ServerConnection>() {
-
-            @Override
-            public void onSuccess(@Nullable ServerConnection serverConnection) {
-                System.out.println("[SINFO] Sending packet!");
-                System.out.println(serverConnection);
-                if (serverConnection != null) {
-                    serverConnection.sendPacket(new ServerInfoUpdatePacket());
-                }
+        broadcastClient.addListener((serverConnection -> {
+            System.out.println("[SINFO] Sending packet!");
+            if (serverConnection != null) {
+                serverConnection.sendPacket(new ServerInfoUpdatePacket());
             }
-
-            @Override
-            public void onFailure(Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-        });
+        }));
     }
 
     public CachedServerInfo getServerInfo(String serverName) {

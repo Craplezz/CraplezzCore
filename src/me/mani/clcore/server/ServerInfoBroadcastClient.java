@@ -1,12 +1,15 @@
 package me.mani.clcore.server;
 
-import com.google.common.util.concurrent.SettableFuture;
 import me.mani.clapi.connection.client.Client;
 import me.mani.clapi.connection.client.ServerConnection;
 import me.mani.clapi.connection.packet.Packet;
 import me.mani.clcore.bungee.ServerManager;
 import me.mani.clcore.server.packet.ServerInfoDataPacket;
 import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Overload
@@ -15,7 +18,7 @@ import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
 public class ServerInfoBroadcastClient extends Client {
 
     private ServerManager serverManager;
-    private SettableFuture<ServerConnection> serverConnectionFuture;
+    private Set<Consumer<ServerConnection>> listeners = new HashSet<>();
 
     public ServerInfoBroadcastClient(ServerManager serverManager) {
         super("localhost", 2424);
@@ -23,19 +26,21 @@ public class ServerInfoBroadcastClient extends Client {
 
         Packet.registerPacket(ServerInfoUpdatePacket.class, (byte) 0);
         Packet.registerPacket(ServerInfoDataPacket.class, (byte) 1);
-
-        serverConnectionFuture = SettableFuture.create();
     }
 
     @Override
     public void onConnect(ServerConnection serverConnection) {
         System.out.println("[SINFO] Connected!");
-        serverConnectionFuture.set(serverConnection);
+        for (Consumer<ServerConnection> listener : listeners) {
+            listener.accept(serverConnection);
+        }
     }
 
     @Override
     public void onDisconnect(ServerConnection serverConnection) {
-        serverConnectionFuture.set(null);
+        for (Consumer<ServerConnection> listener : listeners) {
+            listener.accept(null);
+        }
     }
 
     @Override
@@ -46,8 +51,8 @@ public class ServerInfoBroadcastClient extends Client {
         }
     }
 
-    public SettableFuture<ServerConnection> getServerConnectionFuture() {
-        return serverConnectionFuture;
+    public void addListener(Consumer<ServerConnection> listener) {
+        listeners.add(listener);
     }
 
 }

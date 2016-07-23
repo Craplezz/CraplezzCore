@@ -33,6 +33,7 @@ public class ServerManager {
     public void broadcastServerInfoUpdate() {
         broadcastClient.addListener((serverConnection -> {
             System.out.println("[SINFO] Sending packet!");
+            System.out.println(serverConnection);
             if (serverConnection != null) {
                 serverConnection.sendPacket(new ServerInfoUpdatePacket());
             }

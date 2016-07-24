@@ -17,7 +17,9 @@ public class ServerInfoUpdatePacket extends Packet {
 
     @Override
     public ByteBuffer toBuffer() {
-        return ByteBuffer.allocate(0);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1);
+        byteBuffer.put((byte) 0);
+        return byteBuffer;
     }
 
 }

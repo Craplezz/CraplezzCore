@@ -38,12 +38,12 @@ public class ServerInfoDataPacket extends Packet {
 
     @Override
     public ByteBuffer toBuffer() {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(4 + serverInfo.getServerName().length() + 8 + 4 + serverInfo.getMotd().length() + 1);
-        byteBuffer.putInt(serverInfo.getServerName().length());
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4 + serverInfo.getServerName().getBytes().length + 8 + 4 + serverInfo.getMotd().getBytes().length + 1);
+        byteBuffer.putInt(serverInfo.getServerName().getBytes().length);
         byteBuffer.put(serverInfo.getServerName().getBytes());
         byteBuffer.putInt(serverInfo.getOnlinePlayers());
         byteBuffer.putInt(serverInfo.getMaxPlayers());
-        byteBuffer.putInt(serverInfo.getMotd().length());
+        byteBuffer.putInt(serverInfo.getMotd().getBytes().length);
         byteBuffer.put(serverInfo.getMotd().getBytes());
         byteBuffer.put((byte) (serverInfo.isOffline() ? 1 : 0));
         return byteBuffer;

@@ -21,7 +21,7 @@ public class ServerInfoBroadcastClient extends Client {
     private Set<Consumer<ServerConnection>> listeners = new HashSet<>();
 
     public ServerInfoBroadcastClient(ServerManager serverManager) {
-        super("localhost", 2424);
+        super("craplezz.de", 2424);
         this.serverManager = serverManager;
 
         Packet.registerPacket(ServerInfoUpdatePacket.class, (byte) 0);

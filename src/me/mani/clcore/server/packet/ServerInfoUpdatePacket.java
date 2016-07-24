@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
  */
 public class ServerInfoUpdatePacket extends Packet {
 
+    public ServerInfoUpdatePacket(ByteBuffer byteBuffer) {}
+
     @Override
     public byte getPacketId() {
         return 0;

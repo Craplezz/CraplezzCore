@@ -10,7 +10,14 @@ import java.nio.ByteBuffer;
  */
 public class ServerInfoUpdatePacket extends Packet {
 
+    /**
+     * Constructor for {@link me.mani.clapi.connection.packet.PacketSerializer}
+     *
+     * @param byteBuffer The {@link ByteBuffer} holding the data
+     */
     public ServerInfoUpdatePacket(ByteBuffer byteBuffer) {}
+
+    public ServerInfoUpdatePacket() {}
 
     @Override
     public byte getPacketId() {

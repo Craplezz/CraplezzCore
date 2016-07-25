@@ -27,6 +27,7 @@ public class ServerManager {
     }
 
     public void updateServerInfo(CachedServerInfo serverInfo) {
+        System.out.println("Updated server info for " + serverInfo.getServerName());
         serverInfos.put(serverInfo.getServerName(), serverInfo);
     }
 

@@ -23,16 +23,32 @@ public class CachedServerInfo {
         return serverName;
     }
 
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+
     public int getMaxPlayers() {
         return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public int getOnlinePlayers() {
         return onlinePlayers;
     }
 
+    public void setOnlinePlayers(int onlinePlayers) {
+        this.onlinePlayers = onlinePlayers;
+    }
+
     public String getMotd() {
         return motd;
+    }
+
+    public void setMotd(String motd) {
+        this.motd = motd;
     }
 
     public boolean isOffline() {

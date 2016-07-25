@@ -3,6 +3,7 @@ package me.mani.clcore.listener;
 import me.mani.clcore.ClickManager;
 import me.mani.clcore.Core;
 import mongoperms.MongoPermsAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,7 +23,7 @@ public class PlayerJoinListener implements Listener {
         if (Core.getLocaleManager().getLocale(localeString) != null)
             event.getPlayer().setPlayerListName(Core.getLocaleManager().translate(localeString) + event.getPlayer().getName());
 
-        Core.getServerManager().broadcastServerInfoUpdate();
+        Core.getServerManager().broadcastOnlinePlayers(Bukkit.getOnlinePlayers().size());
 
     }
 

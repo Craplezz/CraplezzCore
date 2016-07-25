@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import me.mani.clcore.Core;
 import me.mani.clcore.server.ServerInfoBroadcastClient;
+import me.mani.clcore.server.packet.ServerInfoDataPacket;
 import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
 import me.mani.clcore.util.CachedServerInfo;
 import org.bukkit.entity.Player;
@@ -18,8 +19,10 @@ public class ServerManager {
 
     private ServerInfoBroadcastClient broadcastClient;
     private Map<String, CachedServerInfo> serverInfos = new HashMap<>();
+    private CachedServerInfo ownServerInfo;
 
-    public ServerManager() {
+    public ServerManager(CachedServerInfo ownServerInfo) {
+        this.ownServerInfo = ownServerInfo;
         broadcastClient = new ServerInfoBroadcastClient(this);
     }
 
@@ -27,10 +30,7 @@ public class ServerManager {
         serverInfos.put(serverInfo.getServerName(), serverInfo);
     }
 
-    /**
-     * Should be called on start, stop, motd change and online player change.
-     */
-    public void broadcastServerInfoUpdate() {
+    public void requestServerInfoUpdate() {
         broadcastClient.addListener((serverConnection -> {
             System.out.println("[SINFO] Sending packet!");
             System.out.println(serverConnection);
@@ -38,6 +38,29 @@ public class ServerManager {
                 serverConnection.sendPacket(new ServerInfoUpdatePacket());
             }
         }));
+    }
+
+    public void broadcastServerInfoData() {
+        broadcastClient.addListener(serverConnection -> {
+            if (serverConnection != null) {
+                serverConnection.sendPacket(new ServerInfoDataPacket(ownServerInfo));
+            }
+        });
+    }
+
+    public void broadcastOnlinePlayers(int onlinePlayers) {
+        ownServerInfo.setOnlinePlayers(onlinePlayers);
+        broadcastServerInfoData();
+    }
+
+    public void broadcastMaxPlayers(int maxPlayers) {
+        ownServerInfo.setMaxPlayers(maxPlayers);
+        broadcastServerInfoData();
+    }
+
+    public void broadcastMotd(String motd) {
+        ownServerInfo.setMotd(motd);
+        broadcastServerInfoData();
     }
 
     public CachedServerInfo getServerInfo(String serverName) {

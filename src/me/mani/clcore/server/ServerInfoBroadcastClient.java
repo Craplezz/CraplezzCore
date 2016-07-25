@@ -19,6 +19,8 @@ public class ServerInfoBroadcastClient extends Client {
 
     private ServerManager serverManager;
     private Set<Consumer<ServerConnection>> listeners = new HashSet<>();
+    private ServerConnection serverConnection;
+    private boolean isConnected;
 
     public ServerInfoBroadcastClient(ServerManager serverManager) {
         super("craplezz.de", 2424);
@@ -31,6 +33,8 @@ public class ServerInfoBroadcastClient extends Client {
     @Override
     public void onConnect(ServerConnection serverConnection) {
         System.out.println("[SINFO] Connected!");
+        this.serverConnection = serverConnection;
+        isConnected = true;
         for (Consumer<ServerConnection> listener : listeners) {
             listener.accept(serverConnection);
         }
@@ -38,6 +42,8 @@ public class ServerInfoBroadcastClient extends Client {
 
     @Override
     public void onDisconnect(ServerConnection serverConnection) {
+        this.serverConnection = null;
+        isConnected = false;
         for (Consumer<ServerConnection> listener : listeners) {
             listener.accept(null);
         }
@@ -52,7 +58,12 @@ public class ServerInfoBroadcastClient extends Client {
     }
 
     public void addListener(Consumer<ServerConnection> listener) {
-        listeners.add(listener);
+        if (isConnected) {
+            listener.accept(serverConnection);
+        }
+        else {
+            listeners.add(listener);
+        }
     }
 
 }

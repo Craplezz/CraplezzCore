@@ -6,6 +6,7 @@ import com.mongodb.ServerAddress;
 import me.mani.clcore.bungee.ServerManager;
 import me.mani.clcore.listener.*;
 import me.mani.clcore.locale.LocaleManager;
+import me.mani.clcore.util.CachedServerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,12 +35,15 @@ public class Core extends JavaPlugin {
 
         mongoClient = new MongoClient(new ServerAddress("craplezz.de", 27017), Collections.singletonList(MongoCredential.createCredential("Overload", "admin", "1999mani123".toCharArray())));
         localeManager = new LocaleManager(mongoClient, "todo", "general");
-        serverManager = new ServerManager();
+        serverManager = new ServerManager(new CachedServerInfo(getServer().getServerName(), getServer().getMaxPlayers(), getServer().getOnlinePlayers().size(), getServer().getMotd()));
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
+        // Broadcast own server info
+        serverManager.broadcastServerInfoData();
+
         // Let everybody know that we started
-        serverManager.broadcastServerInfoUpdate();
+        serverManager.requestServerInfoUpdate();
     }
 
     public static Core getInstance() {

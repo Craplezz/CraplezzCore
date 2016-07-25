@@ -21,11 +21,16 @@ public class ServerInfoDataPacket extends Packet {
         byte[] bytes = new byte[byteBuffer.getInt()];
         byteBuffer.get(bytes);
         String serverName = new String(bytes);
+        System.out.println("ServerName: " + serverName);
         int onlinePlayers = byteBuffer.getInt();
+        System.out.println("OnlinePlayers: " + onlinePlayers);
         int maxPlayers = byteBuffer.getInt();
+        System.out.println("MaxPlayers: " + maxPlayers);
         bytes = new byte[byteBuffer.getInt()];
         byteBuffer.get(bytes);
         String motd = new String(bytes);
+        System.out.println("MotD: " + motd);
+        System.out.println("Buffer: " + byteBuffer.position() + ", " + byteBuffer.limit());
         boolean isOffline = byteBuffer.get() == (byte) 1;
         serverInfo = new CachedServerInfo(serverName, maxPlayers, onlinePlayers, motd);
         serverInfo.setOffline(isOffline);

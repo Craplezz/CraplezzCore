@@ -52,6 +52,7 @@ public class ServerInfoDataPacket extends Packet {
         byteBuffer.putInt(serverInfo.getMotd().getBytes().length);
         byteBuffer.put(serverInfo.getMotd().getBytes());
         byteBuffer.put((byte) (serverInfo.isOffline() ? 1 : 0));
+        System.out.println(byteBuffer.toString());
         return byteBuffer;
     }
 

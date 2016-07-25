@@ -5,7 +5,6 @@ import com.google.common.io.ByteStreams;
 import me.mani.clcore.Core;
 import me.mani.clcore.server.ServerInfoBroadcastClient;
 import me.mani.clcore.server.packet.ServerInfoDataPacket;
-import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
 import me.mani.clcore.util.CachedServerInfo;
 import org.bukkit.entity.Player;
 
@@ -29,16 +28,6 @@ public class ServerManager {
     public void updateServerInfo(CachedServerInfo serverInfo) {
         System.out.println("Updated server info for " + serverInfo.getServerName());
         serverInfos.put(serverInfo.getServerName(), serverInfo);
-    }
-
-    public void requestServerInfoUpdate() {
-        broadcastClient.addListener((serverConnection -> {
-            System.out.println("[SINFO] Sending packet!");
-            System.out.println(serverConnection);
-            if (serverConnection != null) {
-                serverConnection.sendPacket(new ServerInfoUpdatePacket());
-            }
-        }));
     }
 
     public void broadcastServerInfoData() {

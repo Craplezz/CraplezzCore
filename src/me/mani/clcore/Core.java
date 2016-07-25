@@ -41,9 +41,6 @@ public class Core extends JavaPlugin {
 
         // Broadcast own server info
         serverManager.broadcastServerInfoData();
-
-        // Let everybody know that we started
-        serverManager.requestServerInfoUpdate();
     }
 
     public static Core getInstance() {

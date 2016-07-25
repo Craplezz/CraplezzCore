@@ -33,7 +33,7 @@ public class ServerInfoDataPacket extends Packet {
 
     @Override
     public byte getPacketId() {
-        return 1;
+        return 0;
     }
 
     @Override

@@ -5,7 +5,6 @@ import me.mani.clapi.connection.client.ServerConnection;
 import me.mani.clapi.connection.packet.Packet;
 import me.mani.clcore.bungee.ServerManager;
 import me.mani.clcore.server.packet.ServerInfoDataPacket;
-import me.mani.clcore.server.packet.ServerInfoUpdatePacket;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +25,7 @@ public class ServerInfoBroadcastClient extends Client {
         super("craplezz.de", 2424);
         this.serverManager = serverManager;
 
-        Packet.registerPacket(ServerInfoUpdatePacket.class, (byte) 0);
-        Packet.registerPacket(ServerInfoDataPacket.class, (byte) 1);
+        Packet.registerPacket(ServerInfoDataPacket.class, (byte) 0);
     }
 
     @Override

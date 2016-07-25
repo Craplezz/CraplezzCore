@@ -44,6 +44,7 @@ public class ServerInfoDataPacket extends Packet {
     @Override
     public ByteBuffer toBuffer() {
         ByteBuffer byteBuffer = ByteBuffer.allocate(4 + serverInfo.getServerName().getBytes().length + 8 + 4 + serverInfo.getMotd().getBytes().length + 1);
+        System.out.println(serverInfo.getMotd());
         byteBuffer.putInt(serverInfo.getServerName().getBytes().length);
         byteBuffer.put(serverInfo.getServerName().getBytes());
         byteBuffer.putInt(serverInfo.getOnlinePlayers());

@@ -4,6 +4,7 @@ import me.mani.clapi.connection.packet.Packet;
 import me.mani.clcore.util.CachedServerInfo;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 /**
  * @author Overload
@@ -18,6 +19,7 @@ public class ServerInfoDataPacket extends Packet {
     }
 
     public ServerInfoDataPacket(ByteBuffer byteBuffer) {
+        System.out.println("Bytes:"  + Arrays.toString(byteBuffer.array()));
         byte[] bytes = new byte[byteBuffer.getInt()];
         byteBuffer.get(bytes);
         String serverName = new String(bytes);

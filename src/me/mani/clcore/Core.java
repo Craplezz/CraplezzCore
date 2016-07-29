@@ -35,7 +35,8 @@ public class Core extends JavaPlugin {
 
         mongoClient = new MongoClient(new ServerAddress("craplezz.de", 27017), Collections.singletonList(MongoCredential.createCredential("Overload", "admin", "1999mani123".toCharArray())));
         localeManager = new LocaleManager(mongoClient, "todo", "general");
-        serverManager = new ServerManager(new CachedServerInfo(getServer().getServerName(), getServer().getMaxPlayers(), getServer().getOnlinePlayers().size(), getServer().getMotd()));
+//        serverManager = new ServerManager(new CachedServerInfo(getServer().getServerName(), getServer().getMaxPlayers(), getServer().getOnlinePlayers().size(), getServer().getMotd()));
+        serverManager = new ServerManager(new CachedServerInfo("hub", 123, 12, "Test MotD"));
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 

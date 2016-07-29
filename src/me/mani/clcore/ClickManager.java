@@ -77,12 +77,13 @@ public class ClickManager {
 	public static boolean handleClick(Player player, InventoryClickEvent event) {
 		if (event.getSlot() < 0 || event.getSlot() >= 256)
 			return false;
-		ClickManager clickManager;
+		ClickManager clickManager = null;
 		if (clickManagers.containsKey(player) && (clickManager = clickManagers.get(player)).inventory != null && clickManager.getInventory().equals(event.getClickedInventory())) {
 			if (clickManager.clickListeners != null && clickManager.clickListeners[event.getSlot()] != null)
 				clickManager.clickListeners[event.getSlot()].accept(event);
 			return true;
 		}
+		System.out.println("ClickManager: " + (clickManager == null ? "null" : clickManager.getInventory().equals(event.getClickedInventory())));
 		return false;
 	}
 	

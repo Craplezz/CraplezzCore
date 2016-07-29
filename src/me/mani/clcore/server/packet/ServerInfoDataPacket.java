@@ -19,7 +19,7 @@ public class ServerInfoDataPacket extends Packet {
     }
 
     public ServerInfoDataPacket(ByteBuffer byteBuffer) {
-        System.out.println("Bytes:"  + Arrays.toString(byteBuffer.array()));
+        System.out.println("Received bytes:"  + Arrays.toString(byteBuffer.array()));
         byte[] bytes = new byte[byteBuffer.getInt()];
         byteBuffer.get(bytes);
         String serverName = new String(bytes);
@@ -53,6 +53,7 @@ public class ServerInfoDataPacket extends Packet {
         byteBuffer.putInt(serverInfo.getMotd().getBytes().length);
         byteBuffer.put(serverInfo.getMotd().getBytes());
         byteBuffer.put((byte) (serverInfo.isOffline() ? 1 : 0));
+        System.out.println("Sending bytes:"  + Arrays.toString(byteBuffer.array()));
         return byteBuffer;
     }
 

@@ -15,7 +15,7 @@ public class ClickManager {
 	private static Map<Player, ClickManager> clickManagers = new HashMap<>();
 
 	private Inventory inventory;
-	private HotbarClickListener[] hotbarClickListeners = new HotbarClickListener[8];
+	private HotbarClickListener[] hotbarClickListeners = new HotbarClickListener[9];
 	private ClickListener[] clickListeners = new ClickListener[256];
 	private Consumer<InventoryCloseEvent> closeListener;
 
@@ -65,7 +65,6 @@ public class ClickManager {
 	}
 	
 	public static void handleClose(Player player, InventoryCloseEvent event) {
-		System.out.println("Debug");
 		if (clickManagers.containsKey(player)) {
 			ClickManager clickManager = clickManagers.get(player);
 			clickManager.clickListeners = new ClickListener[256];
